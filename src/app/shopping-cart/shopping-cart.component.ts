@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 
 export class ShoppingCartComponent implements OnInit {
 
-  iterator: Navigator;
+  navigator: Navigator;
 
   constructor(private router: Router) { }
 
@@ -25,19 +25,19 @@ export class ShoppingCartComponent implements OnInit {
     collection.push(new Item('shoppingcart/review'));
     collection.push(new Item('shoppingcart/submit'));
 
-    this.iterator = new Navigator(collection, this.router);
-    this.iterator.gofirst();
+    this.navigator = new Navigator(collection, this.router);
+    this.navigator.gofirst();
   }
   goNext() {
-    this.iterator.gonext(); 
+    this.navigator.gonext(); 
 
   }
   goPrev() {
-    this.iterator.goprev(); 
+    this.navigator.goprev(); 
   }
   onSubmit() {
     console.log("submited");
-    this.iterator.gofirst();
+    this.navigator.gofirst();
    
   }
 }
