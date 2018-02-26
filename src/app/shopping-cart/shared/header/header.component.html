@@ -1,9 +1,9 @@
 <p>
   header works!
 </p>
-<div  >
-  <a *ngFor="let item of menuItems" [routerLink]="item.link"  
-  routerLinkActive="router-link-active"
-  #rla="routerLinkActive"
-  href="">{{item.caption}} {{ rla.isActive ? '*' : ''}} | </a> 
-</div>
+<div>
+  <a *ngFor="let item of menuItems" [routerLink]="item.link" (click)="goto(item.link)" routerLinkActive="router-link-active"
+    #rla="routerLinkActive" href="">{{item.caption}} {{ rla.isActive ? '*' : ''}} | </a>
+  <div>
+
+  </div>

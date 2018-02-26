@@ -3,6 +3,7 @@ import { DeliveryComponent } from 'app/shopping-cart/delivery/delivery.component
 import { CustomizationComponent } from 'app/shopping-cart/customization/customization.component';
 import { ReviewComponent } from 'app/shopping-cart/review/review.component';
 import { Router } from '@angular/router';
+import { NavigatorService, NavigatorItem } from 'app/shopping-cart/shopping-cart-navigator-service';
 
 @Component({
   selector: 'ev-shopping-cart',
@@ -13,19 +14,16 @@ import { Router } from '@angular/router';
 
 export class ShoppingCartComponent implements OnInit {
 
-  navigator: Navigator;
-
-  constructor(private router: Router) { }
+  constructor(private router: Router, private navigator: NavigatorService) {    }
 
   ngOnInit() {
-    let collection: Item[] = [];
+    let collection: NavigatorItem[] = [];
+    collection.push(new NavigatorItem('shoppingcart/delivery'));
+    collection.push(new NavigatorItem('shoppingcart/customization'));
+    collection.push(new NavigatorItem('shoppingcart/review'));
+    collection.push(new NavigatorItem('shoppingcart/submit'));
 
-    collection.push(new Item('shoppingcart/delivery'));
-    collection.push(new Item('shoppingcart/customization'));
-    collection.push(new Item('shoppingcart/review'));
-    collection.push(new Item('shoppingcart/submit'));
-
-    this.navigator = new Navigator(collection, this.router);
+    this.navigator.init(collection, this.router);
     this.navigator.gofirst();
   }
   goNext() {
@@ -39,64 +37,3 @@ export class ShoppingCartComponent implements OnInit {
     this.navigator.gofirst();   
   }
 }
-class Item {
-  public component: string;
-  constructor(component: string) { this.component = component; }
-  // Constructor
-}
-
-export interface IAbstractNavigator {
-  gofirst();
-  gonext();
-  golast();
-  goprev();
-  isFirst(): boolean;
-  isDone(): boolean;   
-}
-
-export class Navigator implements IAbstractNavigator {
-
-  constructor(collection: Item[], router: Router) {
-    this._collection = collection;
-    this.router = router;
-  }
-  private _current = 0;
-  private _step = 1;
-  private _collection: Item[];
-  private router: Router
-  isFirst(): boolean {
-    return this._current == 0;
-  }
-  isDone(): boolean {
-    return this._current >= this._collection.length - 1;
-  }
-  private currentItem(): Item {
-    return this._collection[this._current] as Item;
-  }
-
-  gofirst() {
-    this._current = 0;
-    this.router.navigate([this.currentItem().component]);    
-  }
-  golast()  {
-    this._current = this._collection.length - 1;
-    this.router.navigate([this.currentItem().component]);    
-  }
-  gonext() {
-    this._current += this._step;
-    if (!this.isDone()) {
-      this.router.navigate([this.currentItem().component]);    
-    }
-    else {  this.golast(); }
-  }
-
-  goprev() {
-    this._current -= this._step;
-    if (!this.isDone()) {
-      this.router.navigate([this.currentItem().component]);    
-    }
-    else {  this.gofirst(); }
-  }
-
-}
-
