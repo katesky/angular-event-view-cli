@@ -30,15 +30,13 @@ export class ShoppingCartComponent implements OnInit {
   }
   goNext() {
     this.navigator.gonext(); 
-
   }
   goPrev() {
     this.navigator.goprev(); 
   }
   onSubmit() {
     console.log("submited");
-    this.navigator.gofirst();
-   
+    this.navigator.gofirst();   
   }
 }
 class Item {
@@ -53,12 +51,10 @@ export interface IAbstractNavigator {
   golast();
   goprev();
   isFirst(): boolean;
-  isDone(): boolean;
-   
+  isDone(): boolean;   
 }
 
 export class Navigator implements IAbstractNavigator {
-
 
   constructor(collection: Item[], router: Router) {
     this._collection = collection;
