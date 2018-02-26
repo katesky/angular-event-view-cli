@@ -8,44 +8,51 @@ export class NavigatorItem {
   constructor(component: string) { this.component = component; }
   // Constructor
 }
-
-
+export class Navigator {
+  public current: string;
+  public next: string;
+  constructor(current: string = "", next: string = "") {
+    this.current = current;
+    this.next = next;
+  }
+}
 @Injectable()
 export class NavigatorService implements IAbstractNavigator {
-  navigatorStateChange: BehaviorSubject<Object> = new BehaviorSubject<Object>({});
+
+  navigatorStateChange: BehaviorSubject<Navigator> = new BehaviorSubject<Navigator>(new Navigator());
 
   constructor() { }
 
 
-  init(collection: NavigatorItem[], router: Router) {
-    this._collection = collection;
-    this.router = router;
-  };
 
   private _current = 0;
   private _step = 1;
   private _collection: NavigatorItem[];
   private router: Router
-  
-  shouldSaveState(obj:any, route:string){
-    return (obj["current"]["component"] == route && obj["next"]["component"] != route) ;      
+
+
+  private currentItem(): NavigatorItem {
+
+    return this._collection[this._current] as NavigatorItem;
+  }
+  private changeState(changingToIndex: number, currentindex: number) {
+    let current = this._collection[currentindex];
+    let next = this._collection[changingToIndex];
+    this.navigatorStateChange.next(new Navigator(current.component, next.component));
   }
 
+  init(collection: NavigatorItem[], router: Router) {
+    this._collection = collection;
+    this.router = router;
+  };
+  shouldSaveState(navigator: Navigator, route: string) {
+    return (navigator.current == route && navigator.next != route);
+  }
   isFirst(): boolean {
     return this._current == 0;
   }
   isDone(): boolean {
     return this._current >= this._collection.length - 1;
-  }
-  private currentItem(): NavigatorItem {
-
-    return this._collection[this._current] as NavigatorItem;
-  }
-  changeState(changingToIndex: number, currentindex: number) {
-    let current = this._collection[currentindex];
-    let next = this._collection[changingToIndex];
-    this.navigatorStateChange.next({ current: current, next: next });
-
   }
   gofirst() {
     this._current = 0;
@@ -57,14 +64,14 @@ export class NavigatorService implements IAbstractNavigator {
     let current = this._current;
     this._current = this._collection.length - 1;
     this.router.navigate([this.currentItem().component]);
-    this.changeState(this._collection.length - 1, current);
+    this.changeState(this._current, current);
   }
   gonext() {
     let current = this._current;
     this._current += this._step;
     if (!this.isDone()) {
       this.router.navigate([this.currentItem().component]);
-      this.changeState(this._current + this._step, current);
+      this.changeState(this._current, current);
     }
     else {
       this.golast()
@@ -76,7 +83,7 @@ export class NavigatorService implements IAbstractNavigator {
     this._current -= this._step;
     if (!this.isDone()) {
       this.router.navigate([this.currentItem().component]);
-      this.changeState(this._current - this._step, current);
+      this.changeState(this._current, current);
     }
     else {
       this.gofirst();
@@ -101,4 +108,6 @@ export interface IAbstractNavigator {
   isFirst(): boolean;
   isDone(): boolean;
   goto(link: string);
+
+  shouldSaveState(navigator: Navigator, route: string): boolean;
 }

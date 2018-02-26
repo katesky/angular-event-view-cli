@@ -27,7 +27,7 @@ export class DeliveryComponent implements OnInit {
   }
   ngOnInit() {
     this.navigator.navigatorStateChange.subscribe(obj => {
-      if (this.navigator.shouldSaveState(obj, my_route)) {
+      if (this.navigator.shouldSaveState(obj, my_route) && this.form.touched) {
         console.log("calling save state delivery");
       }
     })

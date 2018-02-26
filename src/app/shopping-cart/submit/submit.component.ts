@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigatorService } from '../shopping-cart-navigator-service';
+import { FormGroup } from '@angular/forms';
 const my_route = 'shoppingcart/submit';
 @Component({
   selector: 'ev-submit',
@@ -7,7 +8,7 @@ const my_route = 'shoppingcart/submit';
   styleUrls: ['./submit.component.css']
 })
 export class SubmitComponent implements OnInit {
-
+  form: FormGroup;
   constructor(private navigator: NavigatorService) { }
 
   ngOnInit() {

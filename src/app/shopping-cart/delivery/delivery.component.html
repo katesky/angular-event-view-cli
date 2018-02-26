@@ -5,8 +5,8 @@
 <div [formGroup]="form">
   <span *ngFor="let entry of entries">
    
-    <input type="radio" [value]="entry" name="entry" formControlName="entry" (change)="changed(entry)">
-    <span>{{ entry }}</span>
+      <input type="radio" [value]="entry" name="entry" formControlName="entry" (change)="changed(entry)">
+      <span>{{ entry }}</span>
 </span>
 
 <ev-address [entity]="address"></ev-address>
