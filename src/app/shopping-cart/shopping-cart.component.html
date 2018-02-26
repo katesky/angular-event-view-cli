@@ -1,0 +1,15 @@
+<p>
+  shopping-cart works!
+</p>
+<ev-header></ev-header>
+
+<router-outlet></router-outlet>
+
+
+<button  *ngIf="!iterator.isFirst()" (click)="goPrev()">Prev</button>
+ 
+  <button *ngIf="!iterator.isDone()" (click)="goNext()">Next</button>  
+ 
+ 
+  <button *ngIf="iterator.isDone()" (click)="onSubmit()">Submit</button>
+ 

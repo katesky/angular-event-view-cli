@@ -42,6 +42,10 @@ export const routes: Routes = [
     path: 'sessions',
     loadChildren: 'app/sessions/sessions.module#SessionsModule'
   },
+  {
+    path: 'shoppingcart',
+    loadChildren: 'app/shopping-cart/shopping-cart.module#ShoppingCartModule'
+  },
   { path: '**', pathMatch: 'full', component: PageNotFoundComponent }
 ];
 
