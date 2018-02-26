@@ -11,10 +11,12 @@ import { SubmitComponent } from './submit/submit.component';
 import { SharedModule } from 'app/shared/shared.module';
 import { HeaderComponent } from './shared/header/header.component';
 import { NavigatorService } from 'app/shopping-cart/shopping-cart-navigator-service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AddressComponent } from './delivery/address/address.component';
 
 @NgModule({
-  imports: [SharedModule, ShoppingCartRoutingModule],
-  declarations: [ShoppingCartComponent, routedComponents, CustomizationComponent, DeliveryComponent, ReviewComponent, SubmitComponent, HeaderComponent],
+  imports: [SharedModule, ShoppingCartRoutingModule, FormsModule, ReactiveFormsModule],
+  declarations: [ShoppingCartComponent, routedComponents, CustomizationComponent, DeliveryComponent, ReviewComponent, SubmitComponent, HeaderComponent, AddressComponent],
   providers: [NavigatorService]
 })
 export class ShoppingCartModule { }

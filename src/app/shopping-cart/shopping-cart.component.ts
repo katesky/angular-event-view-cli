@@ -25,6 +25,9 @@ export class ShoppingCartComponent implements OnInit {
 
     this.navigator.init(collection, this.router);
     this.navigator.gofirst();
+    this.navigator.navigatorStateChange.subscribe(obj=>{
+      console.log( obj);
+    })
   }
   goNext() {
     this.navigator.gonext(); 
