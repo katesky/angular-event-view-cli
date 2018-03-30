@@ -29,6 +29,12 @@ export class ShoppingCartComponent implements OnInit {
       console.log( obj);
     })
   }
+  isFirst(){
+    return this.navigator.isFirst();
+  }
+  isDone(){
+    return this.navigator.isDone();
+  }
   goNext() {
     this.navigator.gonext(); 
   }

@@ -5,9 +5,9 @@
 
 <router-outlet></router-outlet>
 <div class="footer" >
-    <button  *ngIf="!navigator.isFirst()" (click)="goPrev()">Prev</button>
-    <button *ngIf="!navigator.isDone()" (click)="goNext()">Next</button>  
-    <button *ngIf="navigator.isDone()" (click)="onSubmit()">Submit</button>
+    <button  *ngIf="!isFirst()" (click)="goPrev()">Prev</button>
+    <button *ngIf="!isDone()" (click)="goNext()">Next</button>  
+    <button *ngIf="isDone()" (click)="onSubmit()">Submit</button>
 </div>
 
  

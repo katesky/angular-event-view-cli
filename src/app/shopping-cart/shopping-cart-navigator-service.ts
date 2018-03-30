@@ -56,21 +56,21 @@ export class NavigatorService implements IAbstractNavigator {
   }
   gofirst() {
     this._current = 0;
-    this.router.navigate([this.currentItem().component]);
+    this.router.navigate([this.currentItem().component], { skipLocationChange: true });
     this.changeState(0, this._current);
 
   }
   golast() {
     let current = this._current;
     this._current = this._collection.length - 1;
-    this.router.navigate([this.currentItem().component]);
+    this.router.navigate([this.currentItem().component], { skipLocationChange: true });
     this.changeState(this._current, current);
   }
   gonext() {
     let current = this._current;
     this._current += this._step;
     if (!this.isDone()) {
-      this.router.navigate([this.currentItem().component]);
+      this.router.navigate([this.currentItem().component], { skipLocationChange: true });
       this.changeState(this._current, current);
     }
     else {
@@ -82,7 +82,7 @@ export class NavigatorService implements IAbstractNavigator {
     let current = this._current;
     this._current -= this._step;
     if (!this.isDone()) {
-      this.router.navigate([this.currentItem().component]);
+      this.router.navigate([this.currentItem().component], { skipLocationChange: true });
       this.changeState(this._current, current);
     }
     else {
@@ -94,7 +94,7 @@ export class NavigatorService implements IAbstractNavigator {
     this._current = this._collection.findIndex(it => {
       return it.component.endsWith(link);
     });
-    this.router.navigate([this.currentItem().component]);
+    this.router.navigate([this.currentItem().component], { skipLocationChange: true });
     this.changeState(this._current, current);
   }
 }
